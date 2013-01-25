@@ -24,7 +24,7 @@ class ModelViewSet(object):
         },
         b'create_view': {
             b'view': CreateView,
-            b'pattern': br'create',  # Change to ’id’?
+            b'pattern': br'create',
             b'name': b'create',
         },
         b'update_view': {
@@ -42,6 +42,7 @@ class ModelViewSet(object):
             },
         },
     }
+    excluded_views = ()
     base_url = None
     main_view = b'list_view'
     main_url = None
@@ -51,9 +52,14 @@ class ModelViewSet(object):
             self.base_url = slugify(self.model._meta.verbose_name_plural)
         self.model_slug = slugify(self.model._meta.verbose_name)
         app_label = self.model._meta.app_label
-        # Deep copy to allow overrides without overriding the parent classe(s).
+        # Deep copy to allow overrides without overriding the parent class(es).
         self.views = deepcopy(self.views)
+        for k in self.excluded_views:
+            del self.views[k]
         if self.main_url is None:
+            if self.main_view not in self.views:
+                raise Exception('%s: `main_view` not in `views`.'
+                                % self.__class__)
             main_view_name = self.views.get(self.main_view).get(b'name')
             self.main_url = b'%s:%s_%s' % (app_label,
                                            self.model_slug,
