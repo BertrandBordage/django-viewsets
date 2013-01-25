@@ -1,15 +1,17 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+from . import ViewSet
 from django.views.generic import ListView, DetailView, CreateView, \
                                  UpdateView, DeleteView
 from django.template.defaultfilters import slugify
-from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse
-from copy import deepcopy
 
 
-class ModelViewSet(object):
+__all__ = (b'ModelViewSet',)
+
+
+class ModelViewSet(ViewSet):
     model = None
     views = {
         b'list_view': {
@@ -42,7 +44,6 @@ class ModelViewSet(object):
             },
         },
     }
-    excluded_views = ()
     base_url = None
     main_view = b'list_view'
     main_url = None
@@ -51,42 +52,30 @@ class ModelViewSet(object):
         if self.base_url is None:
             self.base_url = slugify(self.model._meta.verbose_name_plural)
         self.model_slug = slugify(self.model._meta.verbose_name)
-        app_label = self.model._meta.app_label
-        # Deep copy to allow overrides without overriding the parent class(es).
-        self.views = deepcopy(self.views)
-        for k in self.excluded_views:
-            del self.views[k]
+        if self.app_label is None:
+            self.app_label = self.model._meta.app_label
         if self.main_url is None:
             if self.main_view not in self.views:
                 raise Exception('%s: `main_view` not in `views`.'
                                 % self.__class__)
             main_view_name = self.views.get(self.main_view).get(b'name')
-            self.main_url = b'%s:%s_%s' % (app_label,
+            self.main_url = b'%s:%s_%s' % (self.app_label,
                                            self.model_slug,
                                            main_view_name)
+        super(ModelViewSet, self).__init__()
 
-        self.urls = (self.__build_url_patterns(),
-                     app_label, app_label)
+    def build_url_pattern(self, pattern):
+        pattern = super(ModelViewSet, self).build_url_pattern(pattern)
+        if self.base_url:
+            return br'^%s/%s$' % (self.base_url, pattern)
+        return br'^%s$' % pattern
 
-    def __build_model_generic_view(self, view_dict):
-        view = view_dict[b'view']
-        view.model = self.model
-        for k, v in view_dict.get(b'kwargs', {}).items():
-            if callable(v):
-                v = v(self)
-            setattr(view, k, v)
-        return view.as_view()
+    def build_url_name(self, name):
+        name = super(ModelViewSet, self).build_url_name(name)
+        return b'%s_%s' % (self.model_slug, name)
 
-    def __get_url(self, view_dict):
-        d = {
-            b'regex': br'^%s$' % br'/'.join((self.base_url,
-                                             view_dict[b'pattern'])),
-            b'view': self.__build_model_generic_view(view_dict),
-            b'name': b'%s_%s' % (self.model_slug, view_dict[b'name']),
-        }
-        return url(**d)
-
-    def __build_url_patterns(self):
-        return patterns(b'',
-            *[self.__get_url(view_dict) for view_dict in self.views.values()]
-        )
+    def build_view_from_dict(self, view_dict):
+        view = super(ModelViewSet, self).build_view_from_dict(view_dict)
+        class NewView(view):
+            model = self.model
+        return NewView
