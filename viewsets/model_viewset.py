@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, \
 from django.template.defaultfilters import slugify
 from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse
+from copy import deepcopy
 
 
 class ModelViewSet(object):
@@ -50,6 +51,8 @@ class ModelViewSet(object):
             self.base_url = slugify(self.model._meta.verbose_name_plural)
         self.model_slug = slugify(self.model._meta.verbose_name)
         app_label = self.model._meta.app_label
+        # Deep copy to allow overrides without overriding the parent classe(s).
+        self.views = deepcopy(self.views.copy)
         if self.main_url is None:
             main_view_name = self.views.get(self.main_view).get(b'name')
             self.main_url = b'%s:%s_%s' % (app_label,
