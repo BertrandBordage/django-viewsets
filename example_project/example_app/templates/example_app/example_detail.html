@@ -1,0 +1,10 @@
+{% extends 'example_app/base.html' %}
+{% load url from future %}
+
+{% block content %}
+  <h1>{{ example.name }}</h1>
+  <p>{{ example.content }}</p>
+
+  <a href="{% url 'example_app:example_update' example.pk %}">Update</a>
+  <a href="{% url 'example_app:example_delete' example.pk %}">Delete</a>
+{% endblock %}

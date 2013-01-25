@@ -1,0 +1,16 @@
+{% extends 'example_app/base.html' %}
+{% load url from future %}
+
+{% block content %}
+  <h1>Example objects</h1>
+
+  <ul>
+    {% for example in object_list %}
+      <li><a href="{{ example.get_absolute_url }}">{{ example }}</a></li>
+    {% empty %}
+      No example yet in the database.
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'example_app:example_create' %}">Create a new example</a>
+{% endblock %}

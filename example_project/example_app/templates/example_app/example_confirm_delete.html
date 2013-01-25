@@ -1,0 +1,15 @@
+{% extends 'example_app/base.html' %}
+{% block content %}
+  <h1>Warning</h1>
+
+  Are you sure you want to delete “{{ example }}”?
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">Yes</button>
+    <button type="button"
+            onclick="document.location='{{ example.get_absolute_url }}';">
+      No
+    </button>
+  </form>
+{% endblock %}
