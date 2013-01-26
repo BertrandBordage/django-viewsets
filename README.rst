@@ -114,7 +114,7 @@ model ``verbose_name_plural``:
 ``DeleteView`` *your-models/[pk]/delete*
 ============== =========================
 
-To override 'your-models/', set the attribute ``base_url``.
+To override *your-models* in all URLs, set the attribute ``base_url``.
 
 To remove some views from the viewset, set the attribute ``excluded_views`` to
 a sequence of keys of the views dict.
