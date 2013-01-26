@@ -2,8 +2,6 @@
 django-viewsets
 ===============
 
-Avoid boring views and urls.
-
 .. contents::
 
 Problematic
