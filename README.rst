@@ -9,8 +9,8 @@ Avoid boring views and urls.
 Problematic
 ===========
 
-When having a look at *Ruby on Rails*, I just discovered a nice feature that
-was missing in Django:
+When having a look at *Ruby on Rails*, I discovered a nice feature that was
+missing in Django:
 `controllers <http://guides.rubyonrails.org/action_controller_overview.html>`_.
 Contrary to what I often read, views in Django are not really equivalent to
 controllers in Rails.  A Rails controller basically is **a set of Django
@@ -113,3 +113,9 @@ model ``verbose_name_plural``:
 ``UpdateView`` *your-models/[pk]/update*
 ``DeleteView`` *your-models/[pk]/delete*
 ============== =========================
+
+To override 'your-models/', set the attribute ``base_url``.
+
+To remove some views from the viewset, set the attribute ``excluded_views`` to
+a sequence of keys of the views dict.
+For example: ``('create_view', 'delete_view',)``.
