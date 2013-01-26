@@ -54,9 +54,9 @@ such files:
     )
 
 With a single model, this looks easy.  With complex applications containing
-dozens of models, **this looks painful** − and definitely not *DRY*[#]_.
+dozens of models, **this looks painful** − and definitely not DRY_.
 
-.. [#] Don't Repeat Yourself
+.. [DRY] Don't Repeat Yourself
 
 
 
