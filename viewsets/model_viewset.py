@@ -1,11 +1,11 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-from . import ViewSet
 from django.views.generic import ListView, DetailView, CreateView, \
                                  UpdateView, DeleteView
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
+from .base import ViewSet
 
 
 __all__ = (b'ModelViewSet',)

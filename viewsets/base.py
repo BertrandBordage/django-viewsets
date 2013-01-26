@@ -1,11 +1,11 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-from django.conf.urls import patterns, url
 from copy import deepcopy
+from django.conf.urls import patterns, url
 
 
-__all__ = ( b'ViewSet',)
+__all__ = (b'ViewSet',)
 
 
 class ViewSet(object):
