@@ -102,15 +102,15 @@ In your application `urls.py`::
 That's it!  ``ModelViewSet`` provides you these views and urls − based on the
 model ``verbose_name_plural``:
 
-============== =========================
- Generic view             URL
--------------- -------------------------
-``ListView``   *your-models/*
-``DetailView`` *your-models/[pk]*
-``CreateView`` *your-models/create*
-``UpdateView`` *your-models/[pk]/update*
-``DeleteView`` *your-models/[pk]/delete*
-============== =========================
+============== ========================= ===============================
+ Generic view             URL                       URL name
+-------------- ------------------------- -------------------------------
+``ListView``   *your-models/*            *example_app:your-model_index*
+``DetailView`` *your-models/[pk]*        *example_app:your-model_detail*
+``CreateView`` *your-models/create*      *example_app:your-model_create
+``UpdateView`` *your-models/[pk]/update* *example_app:your-model_update*
+``DeleteView`` *your-models/[pk]/delete* *example_app:your-model_delete*
+============== ========================= ===============================
 
 To override *your-models* in all URLs, set the attribute ``base_url``.
 
