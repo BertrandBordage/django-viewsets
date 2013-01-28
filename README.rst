@@ -107,7 +107,7 @@ model ``verbose_name_plural``:
 -------------- ------------------------- -------------------------------
 ``ListView``   *your-models/*            *example_app:your-model_index*
 ``DetailView`` *your-models/[pk]*        *example_app:your-model_detail*
-``CreateView`` *your-models/create*      *example_app:your-model_create
+``CreateView`` *your-models/create*      *example_app:your-model_create*
 ``UpdateView`` *your-models/[pk]/update* *example_app:your-model_update*
 ``DeleteView`` *your-models/[pk]/delete* *example_app:your-model_delete*
 ============== ========================= ===============================
