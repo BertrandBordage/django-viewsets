@@ -1,10 +1,10 @@
-{% extends 'example_app/base.html' %}
+{% extends 'example_app/example_base.html' %}
 {% load url from future %}
 
 {% block content %}
-  <h1>{{ example.name }}</h1>
-  <p>{{ example.content }}</p>
+  <h1>{{ object.name }}</h1>
+  <p>{{ object.content }}</p>
 
-  <a href="{% url 'example_app:example_update' example.pk %}">Update</a>
-  <a href="{% url 'example_app:example_delete' example.pk %}">Delete</a>
+  <a href="{% url 'example_app:example_update' object.pk %}">Update</a>
+  <a href="{% url 'example_app:example_delete' object.pk %}">Delete</a>
 {% endblock %}

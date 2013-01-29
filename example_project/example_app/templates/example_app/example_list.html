@@ -1,12 +1,12 @@
-{% extends 'example_app/base.html' %}
+{% extends 'example_app/example_base.html' %}
 {% load url from future %}
 
 {% block content %}
   <h1>Example objects</h1>
 
   <ul>
-    {% for example in object_list %}
-      <li><a href="{{ example.get_absolute_url }}">{{ example }}</a></li>
+    {% for object in object_list %}
+      <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
     {% empty %}
       No example yet in the database.
     {% endfor %}
