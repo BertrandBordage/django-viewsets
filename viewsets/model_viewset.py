@@ -38,10 +38,6 @@ class ModelViewSet(ViewSet):
             b'view': DeleteView,
             b'pattern': br'(?P<pk>\d+)/delete',  # Change to ’id’?
             b'name': b'delete',
-            b'kwargs': {
-                b'get_success_url': lambda self:
-                                        lambda _: reverse(self.main_url),
-            },
         },
     }
     namespace = None
@@ -51,9 +47,11 @@ class ModelViewSet(ViewSet):
 
     def __init__(self):
         super(ModelViewSet, self).__init__()
+
         if self.base_url is None:
             self.base_url = slugify(self.model._meta.verbose_name_plural)
         self.model_slug = slugify(self.model._meta.verbose_name)
+
         if self.main_url is None:
             if self.main_view not in self.views:
                 raise Exception('%s: `main_view` not in `views`.'
@@ -62,6 +60,11 @@ class ModelViewSet(ViewSet):
             self.main_url = b'%s_%s' % (self.model_slug, main_view_name)
             if self.namespace is not None:
                 self.main_url = self.namespace + b':' + self.main_url
+
+        if b'delete_view' in self.views:
+            self.views[b'delete_view'][b'kwargs'] = {
+                b'get_success_url': lambda view_self: reverse(self.main_url),
+            }
 
     def build_url_pattern(self, pattern):
         pattern = super(ModelViewSet, self).build_url_pattern(pattern)
@@ -74,7 +77,6 @@ class ModelViewSet(ViewSet):
         return b'%s_%s' % (self.model_slug, name)
 
     def build_view_from_dict(self, view_dict):
-        view = super(ModelViewSet, self).build_view_from_dict(view_dict)
-        class NewView(view):
-            model = self.model
-        return NewView
+        View = super(ModelViewSet, self).build_view_from_dict(view_dict)
+        View.model = self.model
+        return View
