@@ -117,7 +117,8 @@ Attributes
   Dictionary defining views and URLs.  CRUD [2]_ by default.
 
 ``base_url``
-  Overrides *your-models* in all URLs.
+  Overrides *your-models* in all URLs.  Calculated from
+  ``model._meta.verbose_name_plural`` if unset.
 
 ``excluded_views``
   A sequence of keys from the ``views``.  Unset by default.
@@ -133,6 +134,9 @@ Attributes
 ``main_url``
   The main url where delete_view redirects.  If set, ``main_view`` is ignored.
 
+``model_slug``
+  Used to construct URL names.  Calculated from
+  ``model._meta.verbose_name`` if unset.
 
 
 .. [1] Don't Repeat Yourself

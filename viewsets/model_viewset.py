@@ -42,6 +42,7 @@ class ModelViewSet(ViewSet):
     }
     namespace = None
     base_url = None
+    model_slug = None
     main_view = b'list_view'
     main_url = None
 
@@ -50,7 +51,8 @@ class ModelViewSet(ViewSet):
 
         if self.base_url is None:
             self.base_url = slugify(self.model._meta.verbose_name_plural)
-        self.model_slug = slugify(self.model._meta.verbose_name)
+        if self.model_slug is None:
+            self.model_slug = slugify(self.model._meta.verbose_name)
 
         if self.main_url is None:
             if self.main_view not in self.views:
