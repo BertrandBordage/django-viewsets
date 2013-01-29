@@ -13,7 +13,7 @@ except ImportError:
 __author__ = 'Bertrand Bordage'
 __credits__ = ('Bertrand Bordage',)
 __license__ = 'BSD License'
-__version__ = '0.1.1.post'
+__version__ = '0.1.2'
 __maintainer__ = 'Bertrand Bordage'
 __email__ = 'bordage.bertrand@gmail.com'
 __status__ = '3 - Alpha'
