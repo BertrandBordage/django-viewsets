@@ -114,7 +114,7 @@ Attributes
 ..........
 
 ``views``
-  Dictionary defining views and URLs.  [CRUD]_ by default.
+  Dictionary defining views and URLs.  CRUD_ by default.
 
 ``base_url``
   Overrides *your-models* in all URLs.
