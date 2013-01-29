@@ -102,18 +102,38 @@ In your application `urls.py`::
 That's it!  ``ModelViewSet`` provides you these views and urls − based on the
 model ``verbose_name_plural``:
 
-============== ========================= ===============================
- Generic view             URL                       URL name
--------------- ------------------------- -------------------------------
-``ListView``   *your-models/*            *example_app:your-model_index*
-``DetailView`` *your-models/[pk]*        *example_app:your-model_detail*
-``CreateView`` *your-models/create*      *example_app:your-model_create*
-``UpdateView`` *your-models/[pk]/update* *example_app:your-model_update*
-``DeleteView`` *your-models/[pk]/delete* *example_app:your-model_delete*
-============== ========================= ===============================
+============== ========================= ===================
+ Generic view             URL                 URL name
+-------------- ------------------------- -------------------
+``ListView``   *your-models/*            *your-model_index*
+``DetailView`` *your-models/[pk]*        *your-model_detail*
+``CreateView`` *your-models/create*      *your-model_create*
+``UpdateView`` *your-models/[pk]/update* *your-model_update*
+``DeleteView`` *your-models/[pk]/delete* *your-model_delete*
+============== ========================= ===================
 
-To override *your-models* in all URLs, set the attribute ``base_url``.
 
-To remove some views from the viewset, set the attribute ``excluded_views`` to
-a sequence of keys of the views dict.
-For example: ``('create_view', 'delete_view',)``.
+Attributes
+..........
+
+``views``
+  Dictionary defining views and URLs.  CRUD[#]_ by default.
+
+``base_url``
+  Overrides *your-models* in all URLs.
+
+``excluded_views``
+  A sequence of keys from the ``views``.  Unset by default.
+  Example: ``('create_view', 'delete_view',)``.
+
+``namespace``
+  Set this if your application has a URL namespace.  It is used to redirect
+  to ``main_view`` in delete_view.  You can also set ``main_url``.
+
+``main_view``
+  Used to calculate ``main_url``.  ``'list_view'`` by default.
+
+``main_url``
+  The main url where delete_view redirects.  If set, ``main_view`` is ignored.
+
+.. [#] Create Read Update Delete
