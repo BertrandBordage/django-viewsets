@@ -54,16 +54,16 @@ class ModelViewSet(ViewSet):
         if self.model_slug is None:
             self.model_slug = slugify(self.model._meta.verbose_name)
 
-        if self.main_url is None:
-            if self.main_view not in self.views:
-                raise Exception('%s: `main_view` not in `views`.'
-                                % self.__class__)
-            main_view_name = self.views.get(self.main_view).get(b'name')
-            self.main_url = b'%s_%s' % (self.model_slug, main_view_name)
-            if self.namespace is not None:
-                self.main_url = self.namespace + b':' + self.main_url
-
         if b'delete_view' in self.views:
+            if self.main_url is None:
+                if self.main_view not in self.views:
+                    raise Exception('%s: `main_view` not in `views`.'
+                                    % self.__class__)
+                main_view_name = self.views.get(self.main_view).get(b'name')
+                self.main_url = b'%s_%s' % (self.model_slug, main_view_name)
+                if self.namespace is not None:
+                    self.main_url = self.namespace + b':' + self.main_url
+
             self.views[b'delete_view'][b'kwargs'] = {
                 b'get_success_url': lambda view_self: reverse(self.main_url),
             }
