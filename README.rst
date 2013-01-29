@@ -54,9 +54,6 @@ such files:
 With a single model, this looks easy.  With complex applications containing
 dozens of models, **this looks painful** − and definitely not DRY_.
 
-.. [DRY] Don't Repeat Yourself
-
-
 
 Solution
 ========
@@ -117,7 +114,7 @@ Attributes
 ..........
 
 ``views``
-  Dictionary defining views and URLs.  CRUD[#]_ by default.
+  Dictionary defining views and URLs.  [CRUD] by default.
 
 ``base_url``
   Overrides *your-models* in all URLs.
@@ -136,4 +133,7 @@ Attributes
 ``main_url``
   The main url where delete_view redirects.  If set, ``main_view`` is ignored.
 
-.. [#] Create Read Update Delete
+
+
+.. [DRY] Don't Repeat Yourself
+.. [CRUD] Create Read Update Delete
