@@ -52,7 +52,7 @@ such files:
     )
 
 With a single model, this looks easy.  With complex applications containing
-dozens of models, **this looks painful** − and definitely not DRY_.
+dozens of models, **this looks painful** − and definitely not DRY [#]_.
 
 
 Solution
@@ -114,7 +114,7 @@ Attributes
 ..........
 
 ``views``
-  Dictionary defining views and URLs.  CRUD_ by default.
+  Dictionary defining views and URLs.  CRUD [#]_ by default.
 
 ``base_url``
   Overrides *your-models* in all URLs.
@@ -135,5 +135,5 @@ Attributes
 
 
 
-.. [DRY] Don't Repeat Yourself
-.. [CRUD] Create Read Update Delete
+.. [#] Don't Repeat Yourself
+.. [#] Create Read Update Delete
