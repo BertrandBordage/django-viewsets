@@ -44,25 +44,24 @@ class ModelViewSet(ViewSet):
             },
         },
     }
+    namespace = None
     base_url = None
     main_view = b'list_view'
     main_url = None
 
     def __init__(self):
+        super(ModelViewSet, self).__init__()
         if self.base_url is None:
             self.base_url = slugify(self.model._meta.verbose_name_plural)
         self.model_slug = slugify(self.model._meta.verbose_name)
-        if self.app_label is None:
-            self.app_label = self.model._meta.app_label
         if self.main_url is None:
             if self.main_view not in self.views:
                 raise Exception('%s: `main_view` not in `views`.'
                                 % self.__class__)
             main_view_name = self.views.get(self.main_view).get(b'name')
-            self.main_url = b'%s:%s_%s' % (self.app_label,
-                                           self.model_slug,
-                                           main_view_name)
-        super(ModelViewSet, self).__init__()
+            self.main_url = b'%s_%s' % (self.model_slug, main_view_name)
+            if self.namespace is not None:
+                self.main_url = self.namespace + b':' + self.main_url
 
     def build_url_pattern(self, pattern):
         pattern = super(ModelViewSet, self).build_url_pattern(pattern)
