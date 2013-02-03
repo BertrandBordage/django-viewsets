@@ -41,18 +41,18 @@ class ModelViewSet(ViewSet):
         },
     }
     namespace = None
-    base_url = None
-    model_slug = None
+    base_url_pattern = None
+    base_url_name = None
     main_view = b'list_view'
     main_url = None
 
     def __init__(self):
         super(ModelViewSet, self).__init__()
 
-        if self.base_url is None:
-            self.base_url = slugify(self.model._meta.verbose_name_plural)
-        if self.model_slug is None:
-            self.model_slug = slugify(self.model._meta.verbose_name)
+        if self.base_url_pattern is None:
+            self.base_url_pattern = slugify(self.model._meta.verbose_name_plural)
+        if self.base_url_name is None:
+            self.base_url_name = slugify(self.model._meta.verbose_name)
 
         if b'delete_view' in self.views:
             if self.main_url is None:
@@ -60,7 +60,7 @@ class ModelViewSet(ViewSet):
                     raise Exception('%s: `main_view` not in `views`.'
                                     % self.__class__)
                 main_view_name = self.views.get(self.main_view).get(b'name')
-                self.main_url = b'%s_%s' % (self.model_slug, main_view_name)
+                self.main_url = b'%s_%s' % (self.base_url_name, main_view_name)
                 if self.namespace is not None:
                     self.main_url = self.namespace + b':' + self.main_url
 
@@ -70,13 +70,13 @@ class ModelViewSet(ViewSet):
 
     def build_url_pattern(self, pattern):
         pattern = super(ModelViewSet, self).build_url_pattern(pattern)
-        if self.base_url:
-            return br'^%s/%s$' % (self.base_url, pattern)
+        if self.base_url_pattern:
+            return br'^%s/%s$' % (self.base_url_pattern, pattern)
         return br'^%s$' % pattern
 
     def build_url_name(self, name):
         name = super(ModelViewSet, self).build_url_name(name)
-        return b'%s_%s' % (self.model_slug, name)
+        return b'%s_%s' % (self.base_url_name, name)
 
     def build_view_from_dict(self, view_dict):
         View = super(ModelViewSet, self).build_view_from_dict(view_dict)
