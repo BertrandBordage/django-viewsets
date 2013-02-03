@@ -1,11 +1,12 @@
-from viewsets.model import ModelViewSet
+from viewsets import ModelViewSet, SLUG
 from .models import Example
+
+
+other_example_viewset = ModelViewSet(Example, id_pattern=SLUG)
 
 
 class ExampleViewSet(ModelViewSet):
     model = Example
-    excluded_views = ('delete_view',)
-
-
-other_example_viewset = ModelViewSet(Example, base_url_pattern='others',
-                                     base_url_name='other')
+    id_pattern = SLUG
+    base_url_pattern = 'others'
+    base_url_name = 'other'

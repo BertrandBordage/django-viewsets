@@ -5,6 +5,6 @@
   <h1>{{ object.name }}</h1>
   <p>{{ object.content }}</p>
 
-  <a href="{% url 'example_app:example_update' object.pk %}">Update</a>
-  <a href="{% url 'example_app:example_delete' object.pk %}">Delete</a>
+  <a href="{% url 'example_app:example_update' object.slug %}">Update</a>
+  <a href="{% url 'example_app:example_delete' object.slug %}">Delete</a>
 {% endblock %}

@@ -6,6 +6,6 @@ from .views import ExampleViewSet, other_example_viewset
 
 
 urlpatterns = patterns(b'',
-    url(br'', include(ExampleViewSet().urls)),
     url(br'', include(other_example_viewset.urls)),
+    url(br'', include(ExampleViewSet().urls)),
 )
