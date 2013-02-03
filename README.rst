@@ -78,6 +78,46 @@ Usage
 ``ModelViewSet``
 ----------------
 
+Provided views and urls
+.......................
+
+============== ========================= ===================
+ Generic view             URL                 URL name
+-------------- ------------------------- -------------------
+``ListView``   *your-models/*            *your-model_index*
+``DetailView`` *your-models/[pk]*        *your-model_detail*
+``CreateView`` *your-models/create/*     *your-model_create*
+``UpdateView`` *your-models/[pk]/update* *your-model_update*
+``DeleteView`` *your-models/[pk]/delete* *your-model_delete*
+============== ========================= ===================
+
+Basic use
+.........
+
+In your application (or project) `urls.py`::
+
+    from django.conf.urls import patterns, url, include
+    from viewsets import ModelViewSet
+    from .models import YourModel
+
+    urlpatterns = patterns('',
+        url('', include(ModelViewSet(YourModel).urls)),
+    )
+
+
+You can also provide other `basic attributes`_ as keyword arguments.  For
+example, if you want to use slugs instead of primary keys in URL pattern, lines
+2 and 6 becomes::
+
+  from viewsets import ModelViewSet, SLUG  # line 2
+  url('', include(ModelViewSet(YourModel, id_pattern=SLUG).urls)),  # line 6
+
+
+Advanced use
+............
+
+This allow more customization.
+
 In your application `views.py`::
 
     from viewsets import ModelViewSet
@@ -87,7 +127,7 @@ In your application `views.py`::
         model = YourModel
 
 
-In your application `urls.py`::
+In your application (or project) `urls.py`::
 
     from django.conf.urls import patterns, url, include
     from .views import YourModelViewSet
@@ -96,25 +136,33 @@ In your application `urls.py`::
         url('', include(YourModelViewSet().urls)),
     )
 
-That's it!  ``ModelViewSet`` provides you these views and urls − based on the
-model ``verbose_name_plural``:
 
-============== ========================= ===================
- Generic view             URL                 URL name
--------------- ------------------------- -------------------
-``ListView``   *your-models/*            *your-model_index*
-``DetailView`` *your-models/[pk]*        *your-model_detail*
-``CreateView`` *your-models/create*      *your-model_create*
-``UpdateView`` *your-models/[pk]/update* *your-model_update*
-``DeleteView`` *your-models/[pk]/delete* *your-model_delete*
-============== ========================= ===================
+What is interesting in this use is that you can easily customize views and
+urls.  Let's say you want to use primary keys in update and delete url
+patterns, but you want to use slugs in detail view.  The fastest way to do it
+is::
+
+    from viewsets import ModelViewSet, SLUG
+
+    class CustomModelViewSet(ModelViewSet):
+        def __init__(self, *args, **kwargs):
+            self.views['detail_view']['pattern'] = SLUG
+            super(CustomModelViewSet, self).__init__(*args, **kwargs)
 
 
-Attributes
-..........
+Here we don't set the ``model`` attribute, so that ``CustomModelViewSet`` can
+be used for any of your models.  Of course, you can now use
+``CustomModelViewSet`` with `basic use`_ as well as `Advanced use`_.  And we
+could have set ``model``, if this viewset was meant to be used only with a
+specific model.
 
-``views``
-  Dictionary defining views and URLs.  CRUD [2]_ by default.
+
+Basic Attributes
+................
+
+``model``
+  The model class from which ModelViewSet will create views and urls.  This is
+  the only mandatory attribute.
 
 ``base_url_pattern``
   Overrides *your-models* in all URL patterns.  Calculated from
@@ -123,6 +171,10 @@ Attributes
 ``base_url_name``
   Overrides *your-model* in all URL names.  Calculated from
   ``model._meta.verbose_name`` if unset.
+
+``id_pattern``
+  Overrides *[pk]* in all URL patterns.  You can either use ``viewsets.PK`` or
+  ``viewsets.SLUG``.
 
 ``excluded_views``
   A sequence of keys from the ``views``.  Unset by default.
@@ -137,6 +189,13 @@ Attributes
 
 ``main_url``
   The main url where delete_view redirects.  If set, ``main_view`` is ignored.
+
+
+Advanced attributes
+...................
+
+``views``
+  Dictionary defining views and URLs.  CRUD [2]_ by default.
 
 
 .. [1] Don't Repeat Yourself
