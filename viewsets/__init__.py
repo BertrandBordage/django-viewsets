@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 try:
     from .base import ViewSet
-    from .model_viewset import ModelViewSet
+    from .model import ModelViewSet
 # Allows to see module metadata outside of a Django project
 # (including setup.py).
 except ImportError:

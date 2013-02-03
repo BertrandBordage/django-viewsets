@@ -1,4 +1,4 @@
-from viewsets.model_viewset import ModelViewSet
+from viewsets.model import ModelViewSet
 from .models import Example
 
 
