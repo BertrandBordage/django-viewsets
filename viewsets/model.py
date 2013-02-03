@@ -31,12 +31,12 @@ class ModelViewSet(ViewSet):
         },
         b'update_view': {
             b'view': UpdateView,
-            b'pattern': PLACEHOLDER_PATTERN + br'/update/',
+            b'pattern': PLACEHOLDER_PATTERN + br'/update',
             b'name': b'update',
         },
         b'delete_view': {
             b'view': DeleteView,
-            b'pattern': PLACEHOLDER_PATTERN + br'/delete/',
+            b'pattern': PLACEHOLDER_PATTERN + br'/delete',
             b'name': b'delete',
         },
     }
