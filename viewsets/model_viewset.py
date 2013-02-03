@@ -40,20 +40,39 @@ class ModelViewSet(ViewSet):
             b'name': b'delete',
         },
     }
-    namespace = None
     base_url_pattern = None
     base_url_name = None
     main_view = b'list_view'
     main_url = None
+    namespace = None
 
-    def __init__(self):
+    def __init__(self, model=None, base_url_pattern=None, base_url_name=None,
+                 main_view=None, main_url=None, excluded_views=None,
+                 namespace=None):
+        # Initializes parent class.
         super(ModelViewSet, self).__init__()
-
+        # Initializes the object attributes with __init__ kwargs.
+        if model is not None:
+            self.model = model
+        if base_url_pattern is not None:
+            self.base_url_pattern = base_url_pattern
+        if base_url_name is not None:
+            self.base_url_name = base_url_name
+        if main_view is not None:
+            self.main_view = main_view
+        if main_url is not None:
+            self.main_url = main_url
+        if excluded_views is not None:
+            self.excluded_views = excluded_views
+        if namespace is not None:
+            self.namespace = namespace
+        # If not already done, initializes some attributes from model metadata.
+        model_meta = self.model._meta
         if self.base_url_pattern is None:
-            self.base_url_pattern = slugify(self.model._meta.verbose_name_plural)
+            self.base_url_pattern = slugify(model_meta.verbose_name_plural)
         if self.base_url_name is None:
-            self.base_url_name = slugify(self.model._meta.verbose_name)
-
+            self.base_url_name = slugify(model_meta.verbose_name)
+        # Calculates success_url for the delete view.
         if b'delete_view' in self.views:
             if self.main_url is None:
                 if self.main_view not in self.views:
