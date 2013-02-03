@@ -106,8 +106,8 @@ In your application (or project) `urls.py`::
 
 
 You can also provide other `basic attributes`_ as keyword arguments.  For
-example, if you want to use slugs instead of primary keys in URL pattern, lines
-2 and 6 becomes::
+example, if you want to use slugs instead of primary keys in URL patterns,
+lines 2 and 6 become::
 
   from viewsets import ModelViewSet, SLUG  # line 2
   url('', include(ModelViewSet(YourModel, id_pattern=SLUG).urls)),  # line 6
