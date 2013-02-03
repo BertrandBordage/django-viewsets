@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 from copy import deepcopy
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 
 __all__ = (b'ViewSet',)
