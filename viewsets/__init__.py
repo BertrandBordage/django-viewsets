@@ -8,6 +8,7 @@ try:
 # (including setup.py).
 except ImportError:
     pass
+from .patterns import PK, SLUG
 
 
 __author__ = 'Bertrand Bordage'
