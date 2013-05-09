@@ -1,12 +1,13 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+from django.core.exceptions import ImproperlyConfigured
 try:
     from .base import ViewSet
     from .model import ModelViewSet
 # Allows to see module metadata outside of a Django project
 # (including setup.py).
-except ImportError:
+except (ImportError, ImproperlyConfigured):
     pass
 from .patterns import PK, SLUG
 
