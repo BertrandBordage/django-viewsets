@@ -20,10 +20,13 @@ class ViewSet(object):
 
     def build_view_from_dict(self, view_dict):
         View = view_dict[b'view']
+
         class NewView(View):
             pass
+
         for k, v in view_dict.get(b'kwargs', {}).items():
             setattr(NewView, k, v)
+
         return NewView
 
     def build_url_pattern(self, pattern):

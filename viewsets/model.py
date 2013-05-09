@@ -75,7 +75,7 @@ class ModelViewSet(ViewSet):
         # Replaces `PLACEHOLDER_PATTERN` with `id_pattern` in every view.
         for view_dict in self.views.values():
             view_dict[b'pattern'] = view_dict[b'pattern'].replace(
-                                          PLACEHOLDER_PATTERN, self.id_pattern)
+                PLACEHOLDER_PATTERN, self.id_pattern)
 
         # If not already done, initializes some attributes from model metadata.
         model_meta = self.model._meta
