@@ -1,7 +1,12 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-from django.core.exceptions import ImproperlyConfigured
+
+try:
+    from django.core.exceptions import ImproperlyConfigured
+except ImportError:
+    ImproperlyConfigured = ImportError
+
 try:
     from .base import ViewSet
     from .model import ModelViewSet
@@ -9,6 +14,7 @@ try:
 # (including setup.py).
 except (ImportError, ImproperlyConfigured):
     pass
+
 from .patterns import PK, SLUG
 
 
