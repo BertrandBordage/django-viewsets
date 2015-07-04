@@ -1,11 +1,10 @@
 # coding: utf-8
 
-from __future__ import unicode_literals
 from copy import deepcopy
 from django.conf.urls import url
 
 
-__all__ = (b'ViewSet',)
+__all__ = ('ViewSet',)
 
 
 class ViewSet(object):
@@ -19,12 +18,15 @@ class ViewSet(object):
             del self.views[k]
 
     def build_view_from_dict(self, view_dict):
-        View = view_dict[b'view']
+        View = view_dict['view']
+
+        if 'kwargs' not in view_dict:
+            return View
 
         class NewView(View):
             pass
 
-        for k, v in view_dict.get(b'kwargs', {}).items():
+        for k, v in view_dict['kwargs'].items():
             setattr(NewView, k, v)
 
         return NewView
@@ -36,12 +38,11 @@ class ViewSet(object):
         return name
 
     def __build_url(self, view_dict):
-        d = {
-            b'regex': self.build_url_pattern(view_dict[b'pattern']),
-            b'view': self.build_view_from_dict(view_dict).as_view(),
-            b'name': self.build_url_name(view_dict[b'name']),
-        }
-        return url(**d)
+        return url(
+            regex=self.build_url_pattern(view_dict['pattern']),
+            view=self.build_view_from_dict(view_dict).as_view(),
+            name=self.build_url_name(view_dict['name']),
+        )
 
     @property
     def urls(self):

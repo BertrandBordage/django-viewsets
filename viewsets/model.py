@@ -1,50 +1,49 @@
 # coding: utf-8
 
-from __future__ import unicode_literals
-from django.views.generic import ListView, DetailView, CreateView, \
-                                 UpdateView, DeleteView
+from django.views.generic import (
+    ListView, DetailView, CreateView, UpdateView, DeleteView)
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from .base import ViewSet
 from .patterns import PK, PLACEHOLDER_PATTERN
 
 
-__all__ = (b'ModelViewSet',)
+__all__ = ('ModelViewSet',)
 
 
 class ModelViewSet(ViewSet):
     views = {
-        b'list_view': {
-            b'view': ListView,
-            b'pattern': br'',
-            b'name': b'index',
+        'list_view': {
+            'view': ListView,
+            'pattern': r'',
+            'name': 'index',
         },
-        b'detail_view': {
-            b'view': DetailView,
-            b'pattern': PLACEHOLDER_PATTERN,
-            b'name': b'detail',
+        'detail_view': {
+            'view': DetailView,
+            'pattern': PLACEHOLDER_PATTERN,
+            'name': 'detail',
         },
-        b'create_view': {
-            b'view': CreateView,
-            b'pattern': br'create/',
-            b'name': b'create',
+        'create_view': {
+            'view': CreateView,
+            'pattern': r'create/',
+            'name': 'create',
         },
-        b'update_view': {
-            b'view': UpdateView,
-            b'pattern': PLACEHOLDER_PATTERN + br'/update',
-            b'name': b'update',
+        'update_view': {
+            'view': UpdateView,
+            'pattern': PLACEHOLDER_PATTERN + r'/update',
+            'name': 'update',
         },
-        b'delete_view': {
-            b'view': DeleteView,
-            b'pattern': PLACEHOLDER_PATTERN + br'/delete',
-            b'name': b'delete',
+        'delete_view': {
+            'view': DeleteView,
+            'pattern': PLACEHOLDER_PATTERN + r'/delete',
+            'name': 'delete',
         },
     }
     model = None
     base_url_pattern = None
     base_url_name = None
     id_pattern = PK
-    main_view = b'list_view'
+    main_view = 'list_view'
     main_url = None
     namespace = None
 
@@ -74,7 +73,7 @@ class ModelViewSet(ViewSet):
 
         # Replaces `PLACEHOLDER_PATTERN` with `id_pattern` in every view.
         for view_dict in self.views.values():
-            view_dict[b'pattern'] = view_dict[b'pattern'].replace(
+            view_dict['pattern'] = view_dict['pattern'].replace(
                 PLACEHOLDER_PATTERN, self.id_pattern)
 
         # If not already done, initializes some attributes from model metadata.
@@ -85,29 +84,29 @@ class ModelViewSet(ViewSet):
             self.base_url_name = slugify(model_meta.verbose_name)
 
         # Calculates `success_url` for the delete view.
-        if b'delete_view' in self.views:
+        if 'delete_view' in self.views:
             if self.main_url is None:
                 if self.main_view not in self.views:
                     raise Exception('%s: `main_view` not in `views`.'
                                     % self.__class__)
-                main_view_name = self.views.get(self.main_view).get(b'name')
-                self.main_url = b'%s_%s' % (self.base_url_name, main_view_name)
+                main_view_name = self.views.get(self.main_view).get('name')
+                self.main_url = '%s_%s' % (self.base_url_name, main_view_name)
                 if self.namespace is not None:
-                    self.main_url = self.namespace + b':' + self.main_url
+                    self.main_url = self.namespace + ':' + self.main_url
 
-            self.views[b'delete_view'][b'kwargs'] = {
-                b'get_success_url': lambda view_self: reverse(self.main_url),
+            self.views['delete_view']['kwargs'] = {
+                'get_success_url': lambda view_self: reverse(self.main_url),
             }
 
     def build_url_pattern(self, pattern):
         pattern = super(ModelViewSet, self).build_url_pattern(pattern)
         if self.base_url_pattern:
-            return br'^%s/%s$' % (self.base_url_pattern, pattern)
-        return br'^%s$' % pattern
+            return r'^%s/%s$' % (self.base_url_pattern, pattern)
+        return r'^%s$' % pattern
 
     def build_url_name(self, name):
         name = super(ModelViewSet, self).build_url_name(name)
-        return b'%s_%s' % (self.base_url_name, name)
+        return '%s_%s' % (self.base_url_name, name)
 
     def build_view_from_dict(self, view_dict):
         View = super(ModelViewSet, self).build_view_from_dict(view_dict)
