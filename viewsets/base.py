@@ -21,13 +21,10 @@ class ViewSet(object):
     def build_view_from_dict(self, view_dict):
         View = view_dict['view']
 
-        if 'kwargs' not in view_dict:
-            return View
-
         class NewView(View):
             pass
 
-        for k, v in view_dict['kwargs'].items():
+        for k, v in view_dict.get('kwargs', {}).items():
             setattr(NewView, k, v)
 
         return NewView
