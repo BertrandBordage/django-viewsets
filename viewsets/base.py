@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from copy import deepcopy
+
 from django.conf.urls import url
 
 

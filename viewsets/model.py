@@ -1,9 +1,10 @@
 # coding: utf-8
 
+from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView)
-from django.template.defaultfilters import slugify
-from django.core.urlresolvers import reverse
+
 from .base import ViewSet
 from .patterns import PK, PLACEHOLDER_PATTERN
 
