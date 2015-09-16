@@ -21,7 +21,7 @@ from .patterns import PK, SLUG
 __author__ = 'Bertrand Bordage'
 __credits__ = ('Bertrand Bordage',)
 __license__ = 'BSD License'
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 __maintainer__ = 'Bertrand Bordage'
 __email__ = 'bordage.bertrand@gmail.com'
 __status__ = '3 - Alpha'
