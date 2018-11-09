@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView)
