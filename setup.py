@@ -27,7 +27,7 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     install_requires=[
-        'Django >= 1.4',
+        'Django >= 2.0',
     ],
     packages=['viewsets'],
 )
