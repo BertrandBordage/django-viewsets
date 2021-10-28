@@ -47,10 +47,11 @@ class ModelViewSet(ViewSet):
     main_view = 'list_view'
     main_url = None
     namespace = None
+    fields = '__all__'
 
     def __init__(self, model=None, base_url_pattern=None, base_url_name=None,
                  id_pattern=None, excluded_views=None,
-                 main_view=None, main_url=None, namespace=None):
+                 main_view=None, main_url=None, namespace=None, fields=None):
         # Initializes parent class.
         super(ModelViewSet, self).__init__()
         # Initializes object attributes with `__init__` kwargs.
@@ -71,6 +72,8 @@ class ModelViewSet(ViewSet):
             self.main_url = main_url
         if namespace is not None:
             self.namespace = namespace
+        if fields is not None:
+            self.fields = fields
 
         # Replaces `PLACEHOLDER_PATTERN` with `id_pattern` in every view.
         for view_dict in self.views.values():
@@ -112,4 +115,5 @@ class ModelViewSet(ViewSet):
     def build_view_from_dict(self, view_dict):
         View = super(ModelViewSet, self).build_view_from_dict(view_dict)
         View.model = self.model
+        View.fields = self.fields
         return View
