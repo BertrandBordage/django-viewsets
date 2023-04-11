@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.views.generic import (
@@ -53,7 +51,7 @@ class ModelViewSet(ViewSet):
                  id_pattern=None, excluded_views=None,
                  main_view=None, main_url=None, namespace=None, fields=None):
         # Initializes parent class.
-        super(ModelViewSet, self).__init__()
+        super().__init__()
         # Initializes object attributes with `__init__` kwargs.
         if model is not None:
             self.model = model
@@ -103,13 +101,13 @@ class ModelViewSet(ViewSet):
             }
 
     def build_url_pattern(self, pattern):
-        pattern = super(ModelViewSet, self).build_url_pattern(pattern)
+        pattern = super().build_url_pattern(pattern)
         if self.base_url_pattern:
             return r'^%s/%s$' % (self.base_url_pattern, pattern)
         return r'^%s$' % pattern
 
     def build_url_name(self, name):
-        name = super(ModelViewSet, self).build_url_name(name)
+        name = super().build_url_name(name)
         return '%s_%s' % (self.base_url_name, name)
 
     def build_view_from_dict(self, view_dict):
