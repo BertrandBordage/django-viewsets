@@ -44,5 +44,4 @@ class ViewSet(object):
 
     @property
     def urls(self):
-        return [self.__build_url(view_dict)
-                for view_dict in self.views.values()]
+        return [self.__build_url(view_dict) for view_dict in self.views.values()]

@@ -3,7 +3,12 @@
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.views.generic import (
-    ListView, DetailView, CreateView, UpdateView, DeleteView)
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 
 from .base import ViewSet
 from .patterns import PK, PLACEHOLDER_PATTERN
@@ -49,9 +54,18 @@ class ModelViewSet(ViewSet):
     namespace = None
     fields = '__all__'
 
-    def __init__(self, model=None, base_url_pattern=None, base_url_name=None,
-                 id_pattern=None, excluded_views=None,
-                 main_view=None, main_url=None, namespace=None, fields=None):
+    def __init__(
+        self,
+        model=None,
+        base_url_pattern=None,
+        base_url_name=None,
+        id_pattern=None,
+        excluded_views=None,
+        main_view=None,
+        main_url=None,
+        namespace=None,
+        fields=None,
+    ):
         # Initializes parent class.
         super(ModelViewSet, self).__init__()
         # Initializes object attributes with `__init__` kwargs.
@@ -78,7 +92,8 @@ class ModelViewSet(ViewSet):
         # Replaces `PLACEHOLDER_PATTERN` with `id_pattern` in every view.
         for view_dict in self.views.values():
             view_dict['pattern'] = view_dict['pattern'].replace(
-                PLACEHOLDER_PATTERN, self.id_pattern)
+                PLACEHOLDER_PATTERN, self.id_pattern
+            )
 
         # If not already done, initializes some attributes from model metadata.
         model_meta = self.model._meta
@@ -91,8 +106,7 @@ class ModelViewSet(ViewSet):
         if 'delete_view' in self.views:
             if self.main_url is None:
                 if self.main_view not in self.views:
-                    raise Exception('%s: `main_view` not in `views`.'
-                                    % self.__class__)
+                    raise Exception('%s: `main_view` not in `views`.' % self.__class__)
                 main_view_name = self.views.get(self.main_view).get('name')
                 self.main_url = '%s_%s' % (self.base_url_name, main_view_name)
                 if self.namespace is not None:
