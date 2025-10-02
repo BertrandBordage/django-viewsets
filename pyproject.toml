@@ -24,5 +24,8 @@ classifiers = [
 [project.urls]
 Repository = "https://github.com/BertrandBordage/django-viewsets"
 
+[tool.setuptools]
+packages = ["viewsets"]
+
 [tool.ruff.format]
 quote-style = "single"
