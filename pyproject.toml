@@ -1,0 +1,28 @@
+[project]
+name = "django-viewsets"
+version = "0.2.0"
+authors = [
+  {name = "Bertrand Bordage", email = "bordage.bertrand@gmail.com"},
+]
+description = "Avoid boring views and urls."
+readme = "README.rst"
+requires-python = ">=3.4"
+dependencies = [
+  "django>=2.0",
+]
+license = "BSD-2-Clause"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Web Environment",
+  "Framework :: Django",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+
+[project.urls]
+Repository = "https://github.com/BertrandBordage/django-viewsets"
+
+[tool.ruff.format]
+quote-style = "single"
