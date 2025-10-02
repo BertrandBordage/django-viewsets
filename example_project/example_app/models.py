@@ -1,7 +1,7 @@
 # coding: utf-8
 
-from django.db.models import permalink
 from django.db import models
+from django.urls import reverse
 
 
 class Example(models.Model):
@@ -9,9 +9,8 @@ class Example(models.Model):
     content = models.TextField()
     slug = models.SlugField()
 
-    @permalink
     def get_absolute_url(self):
-        return 'example_app:example_detail', (self.slug,)
+        return reverse('example_app:example_detail', args=[self.slug])
 
     def __unicode__(self):
         return self.name

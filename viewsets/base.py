@@ -2,7 +2,7 @@
 
 from copy import deepcopy
 
-from django.conf.urls import url
+from django.urls import re_path
 
 
 __all__ = ('ViewSet',)
@@ -36,9 +36,9 @@ class ViewSet(object):
         return name
 
     def __build_url(self, view_dict):
-        return url(
-            regex=self.build_url_pattern(view_dict['pattern']),
-            view=self.build_view_from_dict(view_dict).as_view(),
+        return re_path(
+            self.build_url_pattern(view_dict['pattern']),
+            self.build_view_from_dict(view_dict).as_view(),
             name=self.build_url_name(view_dict['name']),
         )
 

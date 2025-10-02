@@ -40,16 +40,16 @@ such files:
 ::
 
     # urls.py
-    from django.conf.urls import patterns, url
+    from django.urls import path
     from .views import *
 
 
-    urlpatterns = patterns('',
-        url('^examples/$', ExampleListView.as_view(), name='example_index'),
-        url('^examples/(?P<pk>\d+)$', ExampleDetailView.as_view(),
+    urlpatterns = [
+        path('examples/', ExampleListView.as_view(), name='example_index'),
+        path('examples/<int:pk>', ExampleDetailView.as_view(),
             name='example_detail'),
         # and so on…
-    )
+    ]
 
 With a single model, this looks easy.  With complex applications containing
 dozens of models, **this looks painful** − and definitely not DRY [1]_.
@@ -96,13 +96,13 @@ Basic use
 
 In your application (or project) `urls.py`::
 
-    from django.conf.urls import patterns, url, include
+    from django.urls import path, include
     from viewsets import ModelViewSet
     from .models import YourModel
 
-    urlpatterns = patterns('',
-        url('', include(ModelViewSet(YourModel).urls)),
-    )
+    urlpatterns = [
+        path('', include(ModelViewSet(YourModel).urls)),
+    ]
 
 
 You can also provide other `basic attributes`_ as keyword arguments.  For
@@ -129,12 +129,12 @@ In your application `views.py`::
 
 In your application (or project) `urls.py`::
 
-    from django.conf.urls import patterns, url, include
+    from django.urls import path, include
     from .views import YourModelViewSet
 
-    urlpatterns = patterns('',
-        url('', include(YourModelViewSet().urls)),
-    )
+    urlpatterns = [
+        path('', include(YourModelViewSet().urls)),
+    ]
 
 
 What is interesting in this use is that you can easily customize views and
